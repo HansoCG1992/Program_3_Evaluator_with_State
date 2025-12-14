@@ -1,0 +1,296 @@
+CS 441 - Program 3: Expression Evaluator with State
+USAGE EXAMPLES AND DEMONSTRATIONS
+
+================================================================================
+BASIC ARITHMETIC OPERATIONS
+================================================================================
+
+1. Simple number:
+   > (num 42)
+   Success: 42
+
+2. Addition:
+   > (add (num 10) (num 5))
+   Success: 15
+
+3. Subtraction:
+   > (sub (num 20) (num 8))
+   Success: 12
+
+4. Multiplication:
+   > (mult (num 7) (num 6))
+   Success: 42
+
+5. Division:
+   > (div (num 100) (num 4))
+   Success: 25
+
+6. Complex nested expression:
+   > (add (mult (num 3) (num 4)) (sub (num 20) (num 5)))
+   Success: 27
+   ; This computes: (3 * 4) + (20 - 5) = 12 + 15 = 27
+
+================================================================================
+ERROR HANDLING
+================================================================================
+
+7. Division by zero:
+   > (div (num 10) (num 0))
+   Error: division by zero
+   State unchanged
+
+8. Division by expression that evaluates to zero:
+   > (div (num 5) (sub (num 5) (num 5)))
+   Error: division by zero
+   State unchanged
+
+================================================================================
+VARIABLE OPERATIONS: DEFINE
+================================================================================
+
+9. Define a variable without initial value (undefined):
+   > (define x)
+   Success: x
+   State:
+     x = <undefined>
+
+10. Define a variable with an initial value:
+    > (define y (num 100))
+    Success: y
+    State:
+      y = 100
+
+11. Define a variable using an expression:
+    > (define z (add (num 50) (num 25)))
+    Success: z
+    State:
+      z = 75
+      y = 100
+
+12. Try to define a variable that already exists (ERROR):
+    > (define y (num 200))
+    Error: define y: identifier already defined
+    State unchanged
+
+================================================================================
+VARIABLE OPERATIONS: ASSIGN
+================================================================================
+
+13. Assign a value to an undefined variable:
+    > (define a)
+    Success: a
+    > (assign a (num 42))
+    Success: a
+    State:
+      a = 42
+
+14. Try to assign to a variable that doesn't exist (ERROR):
+    > (assign nonexistent (num 10))
+    Error: assign nonexistent: identifier not defined
+    State unchanged
+
+15. Try to assign to a variable that already has a value (ERROR):
+    > (define b (num 5))
+    Success: b
+    > (assign b (num 10))
+    Error: assign b: identifier already has a value (data is immutable)
+    State unchanged
+    ; Data is immutable - once assigned, cannot be changed!
+
+================================================================================
+VARIABLE OPERATIONS: ID (Reference)
+================================================================================
+
+16. Reference a defined variable:
+    > (define num1 (num 50))
+    Success: num1
+    > (id num1)
+    Success: 50
+
+17. Use a variable in an expression:
+    > (define num2 (num 30))
+    Success: num2
+    > (add (id num1) (id num2))
+    Success: 80
+    ; Computes: 50 + 30 = 80
+
+18. Try to reference an undefined variable (ERROR):
+    > (define undef_var)
+    Success: undef_var
+    > (id undef_var)
+    Error: id undef_var: identifier is undefined
+    State unchanged
+
+19. Try to reference a non-existent variable (ERROR):
+    > (id does_not_exist)
+    Error: id does_not_exist: identifier not defined
+    State unchanged
+
+================================================================================
+VARIABLE OPERATIONS: REMOVE
+================================================================================
+
+20. Remove a defined variable:
+    > (define temp (num 99))
+    Success: temp
+    > (remove temp)
+    Success: temp
+    State:
+      (temp no longer in state)
+
+21. Try to remove a non-existent variable (ERROR):
+    > (remove not_there)
+    Error: remove not_there: identifier not defined
+    State unchanged
+
+================================================================================
+COMPLEX WORKFLOW EXAMPLES
+================================================================================
+
+22. Building up a calculation with variables:
+    > (define width (num 10))
+    Success: width
+    > (define height (num 5))
+    Success: height
+    > (define area (mult (id width) (id height)))
+    Success: area
+    State:
+      area = 50
+      height = 5
+      width = 10
+
+23. Working with undefined variables:
+    > (define value)
+    Success: value
+    > (assign value (div (num 100) (num 4)))
+    Success: value
+    > (define doubled (mult (id value) (num 2)))
+    Success: doubled
+    State:
+      doubled = 50
+      value = 25
+
+24. Chain of operations:
+    > (define a (num 10))
+    Success: a
+    > (define b (add (id a) (num 5)))
+    Success: b
+    > (define c (mult (id b) (num 2)))
+    Success: c
+    > (define result (sub (id c) (id a)))
+    Success: result
+    State:
+      result = 20
+      c = 30
+      b = 15
+      a = 10
+    ; This computes: ((10 + 5) * 2) - 10 = (15 * 2) - 10 = 30 - 10 = 20
+
+================================================================================
+IDENTIFIER NAMING RULES
+================================================================================
+
+25. Valid identifiers:
+    > (define my_variable (num 1))
+    Success: my_variable
+
+    > (define my-variable-2 (num 2))
+    Success: my-variable-2
+
+    > (define MixedCase_ID (num 3))
+    Success: MixedCase_ID
+
+26. Invalid identifiers (ERROR):
+    > (define 123invalid (num 5))
+    Error: define: '123invalid' is not a valid identifier
+    ; Must start with a letter!
+
+    > (define my@variable (num 5))
+    Error: define: 'my@variable' is not a valid identifier
+    ; Only letters, digits, hyphens, and underscores allowed!
+
+================================================================================
+SPECIAL REPL COMMANDS
+================================================================================
+
+27. View current state:
+    > state
+    State:
+      result = 20
+      c = 30
+      b = 15
+      a = 10
+
+28. Get help:
+    > help
+    Commands:
+      (num N)              - numeric literal
+      (add E1 E2)          - addition
+      ... (full help menu)
+
+29. Exit the REPL:
+    > quit
+    Goodbye!
+
+    Or use: exit, q, or Ctrl+D (EOF)
+
+================================================================================
+ERROR PROPAGATION EXAMPLES
+================================================================================
+
+30. Error in nested expression:
+    > (add (num 5) (div (num 10) (num 0)))
+    Error: division by zero
+    State unchanged
+    ; The division error propagates up and the entire expression fails
+
+31. Error with undefined variable in expression:
+    > (define x)
+    Success: x
+    > (mult (id x) (num 5))
+    Error: id x: identifier is undefined
+    State unchanged
+    ; Cannot use undefined variables in calculations
+
+32. Error in define expression doesn't create the variable:
+    > (define bad_var (div (num 1) (num 0)))
+    Error: division by zero
+    State unchanged
+    ; Variable 'bad_var' is NOT created because the expression failed
+
+================================================================================
+IMMUTABILITY DEMONSTRATION
+================================================================================
+
+33. Data immutability:
+    > (define constant (num 42))
+    Success: constant
+    > (define constant (num 99))
+    Error: define constant: identifier already defined
+    ; Cannot redefine!
+
+    > (assign constant (num 99))
+    Error: assign constant: identifier already has a value (data is immutable)
+    ; Cannot reassign!
+
+    ; The only way to change is to remove and redefine:
+    > (remove constant)
+    Success: constant
+    > (define constant (num 99))
+    Success: constant
+    State:
+      constant = 99
+
+================================================================================
+NOTES
+================================================================================
+
+- All expressions use prefix notation: (operation arg1 arg2 ...)
+- State is immutable and functional - each operation returns a new state
+- Variables can be in one of three conditions:
+  1. Not defined (doesn't exist in state)
+  2. Defined but undefined (exists with <undefined> value)
+  3. Defined with a value (exists with a number)
+- Once a variable has a value, it cannot be changed (immutable)
+- Errors preserve the original state
+- Division uses floating-point arithmetic
