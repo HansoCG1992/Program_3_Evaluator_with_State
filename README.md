@@ -14,12 +14,12 @@ This project implements an interpreter that evaluates arithmetic expressions and
 
 ## Features
 
-✅ **Arithmetic Operations**: add, sub, mult, div with nested expressions
-✅ **Variable Management**: Define, assign, remove, and reference variables
-✅ **Error Handling**: Descriptive error messages using Either/Result pattern
-✅ **Immutable State**: Functional programming with pure functions
-✅ **Comprehensive Testing**: Automated tests + interactive REPL
-✅ **Input Validation**: Identifier naming rules enforcement
+1. ✅ **Arithmetic Operations**: add, sub, mult, div with nested expressions
+2. ✅ **Variable Management**: Define, assign, remove, and reference variables
+3. ✅ **Error Handling**: Descriptive error messages using Either/Result pattern
+4. ✅ **Immutable State**: Functional programming with pure functions
+5. ✅ **Comprehensive Testing**: Automated tests + interactive REPL
+6. ✅ **Input Validation**: Identifier naming rules enforcement
 
 ## Quick Start
 
@@ -171,13 +171,13 @@ This implementation was developed following functional programming principles:
 
 This project fulfills the CS 441 Program 3 requirements:
 
--✅ Convert from Maybe to Either/Result
--✅ Implement state management (variables and values)
--✅ Support define, assign, remove, and id operations
--✅ Implement REPL loop
--✅ Handle errors gracefully with descriptive messages
--✅ Maintain immutable state
--✅ Comprehensive testing
+1. ✅ Convert from Maybe to Either/Result
+2. ✅ Implement state management (variables and values)
+3. ✅ Support define, assign, remove, and id operations
+4. ✅ Implement REPL loop
+5. ✅ Handle errors gracefully with descriptive messages
+6. ✅ Maintain immutable state
+7. ✅ Comprehensive testing
 
 ## Author
 
