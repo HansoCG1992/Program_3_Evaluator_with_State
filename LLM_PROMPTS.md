@@ -2,7 +2,7 @@
 
 **Course:** CS 441 - Programming Languages
 **Assignment:** Program 3 - Expression Evaluator with State
-**LLM Used:** Claude 3.5 Sonnet (via Claude.ai)
+**LLM Used:** Claude 4.5 Sonnet (via Claude.ai)
 **Estimated LLM Contribution:** ~75% of code generation, 100% of initial structure
 
 ---
