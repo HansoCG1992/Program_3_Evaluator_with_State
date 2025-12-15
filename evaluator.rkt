@@ -243,13 +243,16 @@
                      (cons right-val state)  ; propagate failure, rollback to original state
                      (let ([x (from-success 0 left-val)]
                            [y (from-success 0 right-val)])
-                       (cons
-                        (cond
-                          [(equal? op 'add) (success (+ x y))]
-                          [(equal? op 'sub) (success (- x y))]
-                          [(equal? op 'mult) (success (* x y))]
-                          [(equal? op 'div) (safe-div x y)])
-                        right-state)))))))]
+                       ;; Type guard: ensure both operands are numbers
+                       (if (not (and (number? x) (number? y)))
+                           (cons (failure (format "~a: operands must be numeric" op)) state)
+                           (cons
+                            (cond
+                              [(equal? op 'add) (success (+ x y))]
+                              [(equal? op 'sub) (success (- x y))]
+                              [(equal? op 'mult) (success (* x y))]
+                              [(equal? op 'div) (safe-div x y)])
+                            right-state))))))))]
 
     ;; ---- UNKNOWN OPERATION ----
     [else
