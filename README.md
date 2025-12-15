@@ -1,4 +1,5 @@
 # CS 441 - Program 3: Expression Evaluator with State
+# Created By: Cole Hanson
 
 A functional expression evaluator with stateful variable management, implemented in Racket.
 
@@ -180,7 +181,7 @@ This project fulfills the CS 441 Program 3 requirements:
 
 ## Author
 
-CS 441 Student
+Cole Hanson
 
 ## License
 
