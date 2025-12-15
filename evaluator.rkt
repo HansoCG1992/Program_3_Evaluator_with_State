@@ -55,7 +55,7 @@
 
 ;; Check if identifier exists in state
 (define (id-exists? id state)
-  (assoc id state))
+  (if (assoc id state) #t #f))
 
 ;; Get value of identifier from state
 (define (get-id-value id state)
@@ -235,12 +235,12 @@
                 [left-val (car left-result)]
                 [left-state (cdr left-result)])
            (if (failure? left-val)
-               left-result  ; propagate failure
-               (let* ([right-result (eval-expr (third expr) state)]
+               (cons left-val state)  ; propagate failure, rollback to original state
+               (let* ([right-result (eval-expr (third expr) left-state)]  ; thread state forward
                       [right-val (car right-result)]
                       [right-state (cdr right-result)])
                  (if (failure? right-val)
-                     right-result  ; propagate failure
+                     (cons right-val state)  ; propagate failure, rollback to original state
                      (let ([x (from-success 0 left-val)]
                            [y (from-success 0 right-val)])
                        (cons
@@ -249,7 +249,7 @@
                           [(equal? op 'sub) (success (- x y))]
                           [(equal? op 'mult) (success (* x y))]
                           [(equal? op 'div) (safe-div x y)])
-                        state)))))))]
+                        right-state)))))))]
 
     ;; ---- UNKNOWN OPERATION ----
     [else
