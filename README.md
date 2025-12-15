@@ -171,13 +171,13 @@ This implementation was developed following functional programming principles:
 
 This project fulfills the CS 441 Program 3 requirements:
 
-✅ Convert from Maybe to Either/Result
-✅ Implement state management (variables and values)
-✅ Support define, assign, remove, and id operations
-✅ Implement REPL loop
-✅ Handle errors gracefully with descriptive messages
-✅ Maintain immutable state
-✅ Comprehensive testing
+-✅ Convert from Maybe to Either/Result
+-✅ Implement state management (variables and values)
+-✅ Support define, assign, remove, and id operations
+-✅ Implement REPL loop
+-✅ Handle errors gracefully with descriptive messages
+-✅ Maintain immutable state
+-✅ Comprehensive testing
 
 ## Author
 
