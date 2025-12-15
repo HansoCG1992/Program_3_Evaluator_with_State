@@ -2,6 +2,7 @@
 
 ;; ============================================================================
 ;; CS 441 - Program 3: Expression Evaluator with State
+;; Created by : Cole Hanson
 ;; ============================================================================
 ;; This program implements an expression evaluator that maintains state
 ;; (variables and their values) and uses an Either/Result type system
