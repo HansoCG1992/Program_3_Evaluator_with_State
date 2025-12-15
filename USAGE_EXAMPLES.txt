@@ -1,4 +1,5 @@
 CS 441 - Program 3: Expression Evaluator with State
+Created By: Cole Hanson
 USAGE EXAMPLES AND DEMONSTRATIONS
 
 ================================================================================
